@@ -88,21 +88,22 @@ let start = document.getElementById("start_timer");
 let inputs = document.querySelector(".inputs");
 
 function displaymin() {
-    if (minutes.value == 0 && seconds.value == 0) {
-        start.disabled = true;
-    }
     display.innerHTML =
-        (minutes.value > 9 ? minutes.value : "0" + minutes.value) + ":" + (seconds.value > 9 ? seconds.value : "0" + seconds.value);
+        (minutes.value > 9
+            ? minutes.value
+            : '0' + (minutes.value ? minutes.value : '0')) +
+        ':' +
+        (seconds.value > 9
+            ? seconds.value
+            : '0' + (seconds.value ? seconds.value : '0'));
 };
 
 inputs.addEventListener('input', displaymin);
 
 function watch() {
     if (minutes.value == 0 && seconds.value == 0) {
-        alert("Enter a vaild number!");
-    }
-
-    else {
+        alert('Enter a vaild number!');
+    } else {
         start.disabled = true;
         mins.disabled = true;
         secs.disabled = true;
@@ -111,7 +112,11 @@ function watch() {
         var countDownDate = new Date();
 
         countDownDate.setTime(
-            date1.getTime() + minutes.value * 60 * 1000 + seconds.value * 1000 + 1 * 1000);
+            date1.getTime() +
+            minutes.value * 60 * 1000 +
+            seconds.value * 1000 +
+            1 * 1000
+        );
 
         // Update the count down every 1 second
         var x = setInterval(function () {
@@ -122,16 +127,21 @@ function watch() {
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            display.innerHTML = (minutes > 9 ? minutes : "0" + minutes) + ":" + (seconds > 9 ? seconds : "0" + seconds);
+            display.innerHTML =
+                (minutes > 9 ? minutes : '0' + minutes) +
+                ':' +
+                (seconds > 9 ? seconds : '0' + seconds);
 
-            if (display.innerHTML == "00:00") {
+            if (display.innerHTML == '00:00') {
                 clearInterval(x);
                 start.disabled = false;
                 mins.disabled = false;
                 secs.disabled = false;
-            };
+                mins.value = '';
+                secs.value = '';
+            }
         }, 1000);
-    };
+    }
 };
 
 start.addEventListener('click', watch);
